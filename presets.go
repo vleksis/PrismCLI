@@ -49,4 +49,7 @@ func init() {
 	ColorToForegrounder["rainbow"] = NewRainbowForegrounder(0.03, -1)
 	ColorToBackgrounder["rainbow"] = NewRainbowBackgrounder(0.03, 1)
 
+	ColorToForegrounder["chaos"] = NewChaosForegrounder()
+	ColorToBackgrounder["chaos"] = NewChaosBackgrounder()
+
 }

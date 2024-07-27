@@ -8,7 +8,7 @@ import (
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 	writer := NewCustomWriter(os.Stdout)
-	writer.SetForegrounder(NewMonoForegrounder(ColorToRGB["red"]))
+	writer.SetForegrounder(NewChaosForegrounder())
 
 	for {
 		input, err := reader.ReadBytes('\n')

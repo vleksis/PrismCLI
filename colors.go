@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"io"
 	"math"
+	"math/rand"
 	"strings"
 )
 
 const (
-	resetCode = "\033[0m"
-
 	// ANSI tags to render text
+	resetCode  = "\033[0m"
 	fgColorFmt = "\033[38;2;%d;%d;%dm"
 	bgColorFmt = "\033[48;2;%d;%d;%dm"
 )
@@ -46,6 +46,26 @@ func NewRainbowForegrounder(freq, shift float64) func(int) string {
 func NewRainbowBackgrounder(freq, init float64) func(int) string {
 	return func(index int) string {
 		return rgbToANSIBackground(rainbowRGB(freq, init)(index))
+	}
+}
+
+func RandomRGB() RGB {
+	return RGB{
+		uint8(rand.Int()),
+		uint8(rand.Int()),
+		uint8(rand.Int()),
+	}
+}
+
+func NewChaosForegrounder() func(int) string {
+	return func(index int) string {
+		return rgbToANSIForeground(RandomRGB())
+	}
+}
+
+func NewChaosBackgrounder() func(int) string {
+	return func(index int) string {
+		return rgbToANSIBackground(RandomRGB())
 	}
 }
 
