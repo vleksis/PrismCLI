@@ -1,21 +1,30 @@
 package main
 
 import (
-	"bufio"
-	"os"
+	"flag"
+	"io"
+	"log"
 )
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
-	writer := NewCustomWriter(os.Stdout)
-	writer.SetForegrounder(NewChaosForegrounder())
+	flag.Parse()
+
+	defer closeAllFiles()
+	processFlags()
+
+	buf := make([]byte, 1024)
 
 	for {
-		input, err := reader.ReadBytes('\n')
-		if err != nil {
+		n, err := reader.Read(buf)
+		if err == io.EOF {
 			break
 		}
-		writer.Write(input)
-	}
+		if err != nil {
+			log.Fatal("Error reading file:", err)
+		}
 
+		if _, err := writer.Write(buf[:n]); err != nil {
+			log.Fatal("Error writing file:", err)
+		}
+	}
 }
